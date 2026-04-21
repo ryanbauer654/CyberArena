@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact — CyberArena | Get in Touch</title>
+  <meta name="description" content="Contact CyberArena to host a cyber tournament, train your team, or get answers to any questions. We respond within 1–2 business days." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>" />
+  <link rel="stylesheet" href="../assets/style.css" />
+  <style>
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 4rem;
+      align-items: start;
+    }
+
+    .form-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .form-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--cyan), var(--green), var(--cyan));
+      background-size: 200% 100%;
+      animation: shimmer 3s linear infinite;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .map-placeholder {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+      position: relative;
+      overflow: hidden;
+      min-height: 140px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .map-placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    .map-dot {
+      position: absolute;
+      width: 12px; height: 12px;
+      background: var(--green);
+      border-radius: 50%;
+      box-shadow: 0 0 20px var(--green), 0 0 40px rgba(57,255,20,0.3);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    .map-dot::after {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      border: 1px solid var(--green);
+      opacity: 0;
+      animation: ripple 2s ease-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -50%) scale(1.2); }
+    }
+
+    @keyframes ripple {
+      0% { inset: -4px; opacity: 0.8; }
+      100% { inset: -40px; opacity: 0; }
+    }
+
+    .map-label {
+      position: relative;
+      z-index: 1;
+      font-family: var(--font-display);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .faq-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-bottom: 0.75rem;
+      transition: var(--transition);
+    }
+
+    .faq-item:hover { border-color: var(--border-hover); }
+
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      cursor: pointer;
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      color: var(--text-primary);
+      text-align: left;
+      transition: var(--transition);
+    }
+
+    .faq-question:hover { color: var(--cyan); }
+
+    .faq-icon {
+      flex-shrink: 0;
+      color: var(--cyan);
+      font-size: 1rem;
+      transition: transform 0.3s ease;
+    }
+
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s ease;
+      padding: 0 1.5rem;
+    }
+
+    .faq-item.open .faq-answer {
+      max-height: 200px;
+      padding: 0 1.5rem 1.25rem;
+    }
+
+    .faq-answer p { font-size: 0.9rem; }
+
+    @media (max-width: 900px) {
+      .contact-layout { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAVIGATION ── -->
+<nav class="nav" id="mainNav" role="navigation" aria-label="Main Navigation">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo" aria-label="CyberArena Home">
+      <img src="../assets/logo.png" alt="CyberArena Logo" />
+      <span class="nav-logo-text">CYBER<span>ARENA</span></span>
+    </a>
+    <ul class="nav-links" id="navLinks" role="list">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="products.html">Products / Services</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="products.html" class="btn btn-primary btn-sm" id="nav-start-free">Start Free Tier</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle mobile menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ── PAGE HERO ── -->
+<section class="page-hero" aria-labelledby="contact-hero-heading">
+  <div class="page-hero-bg"></div>
+  <div class="container">
+    <span class="section-label">Get in Touch</span>
+    <h1 id="contact-hero-heading" class="section-title mt-lg">
+      We're Ready<br />When <span>You Are.</span>
+    </h1>
+    <p class="section-subtitle" style="margin:1rem auto 0;">
+      Want to host a cyber tournament or train your team? Send us a message and we'll respond within 1–2 business days.
+    </p>
+  </div>
+</section>
+
+<div class="glow-divider"></div>
+
+<!-- ── CONTACT SECTION ── -->
+<section aria-labelledby="contact-form-heading">
+  <div class="container">
+    <div class="contact-layout">
+
+      <!-- LEFT: Contact Info -->
+      <div class="reveal-left">
+        <h2 id="contact-form-heading" class="section-title mb-lg" style="font-size:1.6rem;">
+          Contact <span>Info</span>
+        </h2>
+
+        <div class="contact-info-item">
+          <div class="contact-info-icon">📧</div>
+          <div>
+            <div class="contact-info-label">Email</div>
+            <div class="contact-info-value">
+              <a href="mailto:arena-ops@cyberarena.io" style="color:var(--cyan);">arena-ops@cyberarena.io</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-info-item">
+          <div class="contact-info-icon">⚡</div>
+          <div>
+            <div class="contact-info-label">Response Time</div>
+            <div class="contact-info-value">1–2 business days</div>
+          </div>
+        </div>
+
+        <div class="contact-info-item">
+          <div class="contact-info-icon">🌐</div>
+          <div>
+            <div class="contact-info-label">Platform</div>
+            <div class="contact-info-value">100% browser-based — accessible globally</div>
+          </div>
+        </div>
+
+        <div class="contact-info-item">
+          <div class="contact-info-icon">⚔️</div>
+          <div>
+            <div class="contact-info-label">Community</div>
+            <div class="contact-info-value">
+              <a href="#" style="color:var(--cyan);">Join our Discord Server →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Animated location marker -->
+        <div class="map-placeholder">
+          <div class="map-dot"></div>
+          <div class="map-label" style="position:absolute; bottom:1rem; left:50%; transform:translateX(-50%); white-space:nowrap;">
+            🌐 Global — Remote-First Team
+          </div>
+        </div>
+
+        <!-- Social links -->
+        <div style="margin-top:1.5rem;">
+          <div style="font-family:var(--font-display); font-size:0.65rem; letter-spacing:0.2em; color:var(--cyan); text-transform:uppercase; margin-bottom:0.75rem;">Follow the Arena</div>
+          <div style="display:flex; gap:0.75rem; flex-wrap:wrap;">
+            <a href="#" class="footer-social-link" aria-label="Twitter/X">𝕏</a>
+            <a href="#" class="footer-social-link" aria-label="Discord">⚔️</a>
+            <a href="#" class="footer-social-link" aria-label="LinkedIn">in</a>
+            <a href="#" class="footer-social-link" aria-label="YouTube">▶</a>
+            <a href="#" class="footer-social-link" aria-label="GitHub">⌥</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Form -->
+      <div class="form-card reveal">
+        <h3 style="font-family:var(--font-display); font-size:1rem; font-weight:700; letter-spacing:0.05em; margin-bottom:1.75rem; color:var(--cyan);">
+          ⚡ Send a Message
+        </h3>
+
+        <form id="contactForm" novalidate aria-label="Contact form">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="contact-name">Name</label>
+              <input
+                type="text"
+                id="contact-name"
+                name="name"
+                class="form-input"
+                placeholder="Your full name"
+                required
+                autocomplete="name"
+              />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="contact-email">Email</label>
+              <input
+                type="email"
+                id="contact-email"
+                name="email"
+                class="form-input"
+                placeholder="your@email.com"
+                required
+                autocomplete="email"
+              />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="contact-org">Organization</label>
+            <input
+              type="text"
+              id="contact-org"
+              name="organization"
+              class="form-input"
+              placeholder="Your university, company, or team name"
+              autocomplete="organization"
+            />
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="contact-type">I Am A...</label>
+            <select id="contact-type" name="type" class="form-select" required>
+              <option value="" disabled selected>Select your role</option>
+              <option value="student">Student</option>
+              <option value="gamer">Gamer</option>
+              <option value="university">University / Educator</option>
+              <option value="company">Company / IT Team</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="contact-message">Message</label>
+            <textarea
+              id="contact-message"
+              name="message"
+              class="form-textarea"
+              placeholder="Tell us what you're looking for — tournament hosting, team training, partnership, or just a question..."
+              required
+            ></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-primary full-width" id="contact-submit" style="font-size:0.75rem;">
+            ⚡ Send Message
+          </button>
+
+          <p style="font-size:0.75rem; color:var(--text-muted); text-align:center; margin-top:1rem;">
+            🔒 Your data is encrypted and never shared. We hate spam too.
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glow-divider"></div>
+
+<!-- ── FAQ ── -->
+<section aria-labelledby="faq-heading">
+  <div class="container">
+    <div class="text-center mb-xl">
+      <span class="section-label">FAQ</span>
+      <h2 id="faq-heading" class="section-title">
+        Common <span>Questions</span>
+      </h2>
+    </div>
+
+    <div style="max-width: 760px; margin: 0 auto;">
+
+      <div class="faq-item reveal" id="faq-1">
+        <button class="faq-question" aria-expanded="false" aria-controls="faq-1-answer">
+          Is CyberArena really free to start?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer" id="faq-1-answer" role="region">
+          <p>Yes — our Free Tier is completely free, forever. No credit card required. You get access to 10 intro CTF missions, basic leaderboard access, and our community Discord. Upgrade to Pro anytime.</p>
+        </div>
+      </div>
+
+      <div class="faq-item reveal" id="faq-2">
+        <button class="faq-question" aria-expanded="false" aria-controls="faq-2-answer">
+          Do I need to install anything or set up a VPN?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer" id="faq-2-answer" role="region">
+          <p>Zero installs. Zero VPN. Every lab environment runs directly in your browser. We handle all the infrastructure so you can focus purely on the mission. Just open a tab and go.</p>
+        </div>
+      </div>
+
+      <div class="faq-item reveal" id="faq-3">
+        <button class="faq-question" aria-expanded="false" aria-controls="faq-3-answer">
+          Can our university or company get group access?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer" id="faq-3-answer" role="region">
+          <p>Absolutely. Our CyberArena for Teams tier is built specifically for universities and IT organizations. You get cohort dashboards, custom tournament hosting, group analytics, and SSO integration. Use the form above to request a demo — we'll get back to you within 1–2 business days.</p>
+        </div>
+      </div>
+
+      <div class="faq-item reveal" id="faq-4">
+        <button class="faq-question" aria-expanded="false" aria-controls="faq-4-answer">
+          What skill level do I need to join?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer" id="faq-4-answer" role="region">
+          <p>Absolute beginners are welcome. We have intro missions that assume zero prior cybersecurity knowledge. As you complete missions, the arena adapts to your skill level. Whether you're a curious gamer or a seasoned IT professional, there's a challenge waiting for you.</p>
+        </div>
+      </div>
+
+      <div class="faq-item reveal" id="faq-5">
+        <button class="faq-question" aria-expanded="false" aria-controls="faq-5-answer">
+          How do team tournaments work?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer" id="faq-5-answer" role="region">
+          <p>Form a squad of 2–5 players and register for a scheduled tournament. Teams compete head-to-head on shared CTF scenarios, racing to capture flags and accumulate points. Results feed into both team and individual global leaderboards. Seasonal championships include real prizes and certification recognition.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section style="padding:80px 0; text-align:center;" aria-labelledby="contact-cta-heading">
+  <div class="container">
+    <span class="section-label">One More Thing</span>
+    <h2 id="contact-cta-heading" class="section-title mt-lg">
+      Not Sure Which Plan?<br /><span>We'll Help You Choose.</span>
+    </h2>
+    <p class="section-subtitle">Drop us a message and we'll recommend the right tier for your goals.</p>
+    <a href="#contact-form-heading" class="btn btn-primary" id="contact-cta-scroll">⚡ Send a Message</a>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand-logo">
+          <img src="../assets/logo.png" alt="CyberArena" />
+          <div class="footer-brand-name">CYBER<span>ARENA</span></div>
+        </div>
+        <p class="footer-tagline">Level Up Your Cyber Skills</p>
+        <div class="footer-social">
+          <a href="#" class="footer-social-link" aria-label="Twitter/X">𝕏</a>
+          <a href="#" class="footer-social-link" aria-label="Discord">⚔️</a>
+          <a href="#" class="footer-social-link" aria-label="LinkedIn">in</a>
+          <a href="#" class="footer-social-link" aria-label="YouTube">▶</a>
+          <a href="#" class="footer-social-link" aria-label="GitHub">⌥</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Navigate</div>
+        <ul class="footer-links">
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Platform</div>
+        <ul class="footer-links">
+          <li><a href="products.html">Free Tier</a></li>
+          <li><a href="products.html">Pro — $25/mo</a></li>
+          <li><a href="products.html">Teams & Universities</a></li>
+          <li><a href="contact.html">Request Demo</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Contact</div>
+        <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:0.75rem;">
+          Got questions? We respond within 1–2 business days.
+        </p>
+        <a href="mailto:arena-ops@cyberarena.io" class="footer-email-link">
+          📧 arena-ops@cyberarena.io
+        </a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 <span>CyberArena</span>. All rights reserved. Built for cyber warriors.</div>
+      <div class="footer-legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Cookie Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/main.js"></script>
+<script>
+  // FAQ accordion
+  document.querySelectorAll('.faq-question').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+
+      // Close all
+      document.querySelectorAll('.faq-item').forEach(el => {
+        el.classList.remove('open');
+        el.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+      });
+
+      // Toggle clicked
+      if (!isOpen) {
+        item.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+</script>
+</body>
+</html>
