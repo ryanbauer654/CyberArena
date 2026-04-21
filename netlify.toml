@@ -1,0 +1,28 @@
+# Netlify configuration for CyberArena
+# Static HTML site — no build step required
+
+[build]
+  publish = "."        # Serve files from the repo root
+
+[[redirects]]
+  from = "/about"
+  to   = "/pages/about.html"
+  status = 200
+
+[[redirects]]
+  from = "/products"
+  to   = "/pages/products.html"
+  status = 200
+
+[[redirects]]
+  from = "/contact"
+  to   = "/pages/contact.html"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options        = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy        = "strict-origin-when-cross-origin"
+    Permissions-Policy     = "camera=(), microphone=(), geolocation=()"
